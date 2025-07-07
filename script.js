@@ -2,30 +2,23 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-// Replace this with your actual deployed Cloudflare Worker URL
-const CLOUDFLARE_WORKER_URL = "https://your-worker-name.your-subdomain.workers.dev";
+const CLOUDFLARE_WORKER_URL = "https://loreal-beauty-assistant.loreal-ai.workers.dev";
 
-// Initial greeting
 addMessage("assistant", "👋 Hello! I'm your L’Oréal beauty assistant. Ask me anything about makeup, skincare, haircare, or fragrance!");
 
-// Handle form submission
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const message = userInput.value.trim();
   if (!message) return;
-
   addMessage("user", message);
   userInput.value = "";
 
-  const systemPrompt = {
-    role: "system",
-    content: `You are a friendly L’Oréal beauty assistant. Only answer questions related to L’Oréal’s products, routines, or general beauty advice (makeup, skincare, haircare, fragrance). If the question is unrelated, politely respond that you can only help with L’Oréal beauty topics.`,
-  };
-
   const messages = [
-    systemPrompt,
-    { role: "user", content: message }
+    {
+      role: "system",
+      content: `You are a friendly L’Oréal beauty assistant. Only answer questions related to L’Oréal’s products, routines, or general beauty advice.`,
+    },
+    { role: "user", content: message },
   ];
 
   try {
@@ -36,13 +29,14 @@ chatForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-
-    const reply = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
+    console.log("OpenAI API response:", data);
+    if (data.error) {
+  console.error("❌ OpenAI Error:", data.error);
+}
+    const reply = data.choices?.[0]?.message?.content || "No response.";
     addMessage("assistant", reply);
-
-  } catch (err) {
-    console.error("Error:", err);
-    addMessage("assistant", "⚠️ Sorry, I had trouble connecting. Please try again later.");
+  } catch {
+    addMessage("assistant", "⚠️ Error connecting to L'Oréal AI.");
   }
 });
 
