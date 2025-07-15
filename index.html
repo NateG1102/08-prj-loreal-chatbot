@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
     <div class="page-wrapper">
       <header class="site-header">
@@ -17,7 +16,38 @@
       </header>
 
       <main>
+        <!-- Category Dropdown -->
+        <div class="search-section">
+          <select id="categoryFilter">
+            <option value="" disabled selected>Choose a Category</option>
+            <option value="cleanser">Cleansers</option>
+            <option value="moisturizer">Moisturizers & Treatments</option>
+            <option value="haircare">Haircare</option>
+            <option value="makeup">Makeup</option>
+            <option value="hair color">Hair Color</option>
+            <option value="hair styling">Hair Styling</option>
+            <option value="men's grooming">Men's Grooming</option>
+            <option value="suncare">Suncare</option>
+            <option value="fragrance">Fragrance</option>
+          </select>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="productsContainer" class="products-grid"></div>
+
+        <!-- Selected Products -->
+        <div class="selected-products">
+          <h2>Selected Products</h2>
+          <div id="selectedProductsList"></div>
+          <button id="generateRoutine" class="generate-btn">
+            <span class="material-icons">auto_awesome</span> Generate Routine
+          </button>
+          <button id="clearSelections" class="clear-btn">Clear All</button>
+        </div>
+
+        <!-- Chat Area -->
         <section class="chatbox">
+          <h2>Let's Build Your Routine</h2>
           <div id="chatWindow" class="chat-window"></div>
           <form id="chatForm" class="chat-form">
             <label for="userInput" class="visually-hidden">Message</label>
@@ -46,6 +76,7 @@
         </nav>
       </footer>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
